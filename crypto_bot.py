@@ -22,7 +22,7 @@ def start(message):
 def get_price(message):
     user_input = message.text
     name_of_crypto = user_input.replace(' ', '-')
-    url = f'https://coinmarketcap.com/currencies/{name_of_crypto}/'
+    url = f'https://coinmarketcap.com/currencies/{name_of_crypto.lower()}/'
     response = requests.get(url)
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, 'lxml')
@@ -30,11 +30,8 @@ def get_price(message):
         element = str(block)
         price = re.findall(r'[$][\d]*[,]?[\d]*[.]?[\d]*', element)
         price = price.pop(0)
-        markdown = """
-                   *bold text*
-                   """
-        bot.send_message(message.chat.id, f'*1 {name_of_crypto.upper()}* = '
-                                          f'*{price}*', parse_mode='markdown')
+        bot.send_message(message.chat.id, f'1 {name_of_crypto} = '
+                                          f'{price}', parse_mode='markdown')
     elif response.status_code == 404:
         bot.send_message(message.chat.id, 'Are you sure this cryptocurrency exists?')
     else:
