@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# bot by w1cee
 
 from bs4 import BeautifulSoup
 import requests
